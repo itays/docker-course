@@ -1,0 +1,18 @@
+sudo: required
+services:
+  - docker
+
+# build the test image from the dev dockerfile
+before_install:
+  - docker build -t itays/multi-client-dev:chapter10 -f ./complexfib/client/Dockerfile.dev ./complexfib/client
+
+# Run tests
+script:
+  - docker run itays/multi-client-dev:chapter10 npm test -- --coverage
+
+# Build prod versions of all projects
+after_success:
+  - docker build -t itays/multi-client:latest ./complexfib/client
+  - docker build -t itays/multi-nginx:latest ./complexfib/nginx
+  - docker build -t itays/multi-worker:latest ./complexfib/worker
+  - docker build -t itays/multi-server:latest ./complexfib/server
