@@ -1,0 +1,18 @@
+sudo: required
+services:
+  - docker
+
+# build the test image from the dev dockerfile
+before_install:
+  - docker build -t itays/multi-client-dev:chapter10 -f ./client/Dockerfile.dev ./client
+
+# Run tests
+script:
+  - docker run itays/multi-client-dev:chapter10 npm test -- --coverage
+
+# Build prod versions of all projects
+after_success:
+  - docker build -t itays/multi-client:latest ./client
+  - docker build -t itays/multu-nginx:latest ./nginx
+  - docker build -t itays/multi-worker:latest ./worker
+  - docker build -t itays/multi-server:latest ./server
