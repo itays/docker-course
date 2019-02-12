@@ -23,3 +23,17 @@ after_success:
   - docker push itays/multi-nginx:latest
   - docker push itays/multi-worker:latest
   - docker push itays/multi-server:latest
+
+# Deploy to AWS
+deploy:
+  provider: elasticbeanstalk
+  region: eu-west-1
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-eu-west-1-933555235210
+  bucket_path: multi-docker
+  on:
+    all_branches: true
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
