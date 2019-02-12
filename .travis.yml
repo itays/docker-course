@@ -16,3 +16,10 @@ after_success:
   - docker build -t itays/multi-nginx:latest ./complexfib/nginx
   - docker build -t itays/multi-worker:latest ./complexfib/worker
   - docker build -t itays/multi-server:latest ./complexfib/server
+  # Log in to docker cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push itays/multi-client:latest
+  - docker push itays/multi-nginx:latest
+  - docker push itays/multi-worker:latest
+  - docker push itays/multi-server:latest
