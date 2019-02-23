@@ -7,6 +7,6 @@ metadata:
 spec:
   containers:
     - name: client
-      image: itays/multi-client
+      image: itays/multi-worker
       ports:
-        - containerPort: 3000
+        - containerPort: 9999
